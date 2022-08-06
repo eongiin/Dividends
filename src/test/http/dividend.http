@@ -1,6 +1,13 @@
-POST http://localhost:8080/company
+### 회사 정보 저장 (MMM,O,COKE,NKE,AAPL,QQQ,SPY,DIA)
+POST {{host}}/company
 Content-Type: application/json
 
 {
-  "ticker": "MMM"
+  "ticker": "DIA"
 }
+
+### 회사 정보 조회
+GET {{host}}/company
+
+### 회사 정보 조회 (페이지 사이즈 조절, 페이지 정보)
+GET {{host}}/company?size=5&page=1

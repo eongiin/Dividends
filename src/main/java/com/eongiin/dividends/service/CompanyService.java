@@ -8,6 +8,8 @@ import com.eongiin.dividends.persist.entity.CompanyEntity;
 import com.eongiin.dividends.persist.entity.DividendEntity;
 import com.eongiin.dividends.scraper.Scraper;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -45,5 +47,9 @@ public class CompanyService {
                 .collect(Collectors.toList());
         this.dividendRepository.saveAll(dividendEntities);
         return company;
+    }
+
+    public Page<CompanyEntity> getAllCompany(Pageable pageable) {
+        return this.companyRepository.findAll(pageable);
     }
 }
