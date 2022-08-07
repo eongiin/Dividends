@@ -3,7 +3,7 @@ POST {{host}}/company
 Content-Type: application/json
 
 {
-  "ticker": "MMM"
+  "ticker": "INTC"
 }
 
 ### 회사 정보 조회
@@ -14,3 +14,6 @@ GET {{host}}/company?size=5&page=1
 
 ### 회사명으로 배당금 조회
 GET {{host}}/finance/dividend/3M Company
+
+### 자동완성 조회
+GET {{host}}/company/autocomplete?keyword=Int
