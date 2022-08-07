@@ -3,7 +3,7 @@ POST {{host}}/company
 Content-Type: application/json
 
 {
-  "ticker": "INTC"
+  "ticker": "NKE"
 }
 
 ### 회사 정보 조회
@@ -16,4 +16,4 @@ GET {{host}}/company?size=5&page=1
 GET {{host}}/finance/dividend/3M Company
 
 ### 자동완성 조회
-GET {{host}}/company/autocomplete?keyword=Int
+GET {{host}}/company/autocomplete?keyword=I
