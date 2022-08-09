@@ -1,5 +1,6 @@
 package com.eongiin.dividends.scraper;
 
+import com.eongiin.dividends.exception.impl.NoTickerException;
 import com.eongiin.dividends.model.Company;
 import com.eongiin.dividends.model.Dividend;
 import com.eongiin.dividends.model.ScrapedResult;
@@ -68,17 +69,23 @@ public class YahooFinanceScraper implements Scraper {
     @Override
     public Company scrapCompanyByTicker(String ticker) {
         String url = String.format(SUMMARY_URL, ticker, ticker);
+        Document document = null;
 
         try {
-            Document document = Jsoup.connect(url).get();
-            Element titleEle = document.getElementsByTag("h1").get(0);
-            String title = titleEle.text().split(" - ")[1].trim();
-
-            return new Company(ticker, title);
-
+            document = Jsoup.connect(url).get();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+
+        if (document.getElementsByTag("h1").size() == 0) {
+            throw new NoTickerException();
+        }
+
+        Element titleEle = document.getElementsByTag("h1").get(0);
+        String title = titleEle.text().split(" - ")[1].trim();
+
+        return new Company(ticker, title);
+
+
     }
 }

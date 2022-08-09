@@ -1,5 +1,7 @@
 package com.eongiin.dividends.service;
 
+import com.eongiin.dividends.exception.impl.AlreadyExistCompanyException;
+import com.eongiin.dividends.exception.impl.NoCompanyException;
 import com.eongiin.dividends.model.Company;
 import com.eongiin.dividends.model.ScrapedResult;
 import com.eongiin.dividends.persist.CompanyRepository;
@@ -30,7 +32,7 @@ public class CompanyService {
     public Company save(String ticker) {
         boolean exists = this.companyRepository.existsByTicker(ticker);
         if (exists) {
-            throw new RuntimeException("already exists ticker -> " + ticker);
+            throw new AlreadyExistCompanyException();
         }
         return this.storeCompanyAndDividend(ticker);
     }
@@ -39,7 +41,7 @@ public class CompanyService {
         //ticker 를 기준으로 회사 스크래핑
         Company company = this.yahooFinanceScrapper.scrapCompanyByTicker(ticker);
         if (ObjectUtils.isEmpty(company)) {
-            throw new RuntimeException("failed to scrap ticker -> " + ticker);
+            throw new NoCompanyException();
         }
         //해당 회사가 존재할 경우, 회사의 배당금 정보를 스크래핑
         ScrapedResult scrapedResult = this.yahooFinanceScrapper.scrap(company);
@@ -77,14 +79,14 @@ public class CompanyService {
         Page<CompanyEntity> companyEntities =
                 this.companyRepository.findByNameStartingWithIgnoreCase(keyword, limit);
         return companyEntities.stream()
-                .map(e -> e.getName())
+                .map(CompanyEntity::getName)
                 .collect(Collectors.toList());
     }
 
     public String deleteCompany(String ticker) {
 
         CompanyEntity company = this.companyRepository.findByTicker(ticker)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회사입니다"));
+                .orElseThrow(NoCompanyException::new);
 
         this.dividendRepository.deleteAllByCompanyId(company.getId());
         this.companyRepository.delete(company);

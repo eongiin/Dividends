@@ -1,5 +1,6 @@
 package com.eongiin.dividends.web;
 
+import com.eongiin.dividends.exception.impl.EmptyTickerException;
 import com.eongiin.dividends.model.Company;
 import com.eongiin.dividends.model.constants.CacheKey;
 import com.eongiin.dividends.persist.entity.CompanyEntity;
@@ -38,7 +39,7 @@ public class CompanyController {
     public ResponseEntity<?> addCompany(@RequestBody Company request) {
         String ticker = request.getTicker().trim();
         if (ObjectUtils.isEmpty(ticker)) {
-            throw new RuntimeException("ticker is empty");
+            throw new EmptyTickerException();
         }
 
         Company company = this.companyService.save(ticker);

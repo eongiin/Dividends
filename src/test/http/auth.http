@@ -1,10 +1,20 @@
-### 회원가입
+### 회원가입 user
 POST {{host}}/auth/signup
 Content-Type: application/json
 
 {
-  "username": "eongiin",
-  "password": "iin1234",
+  "username": "user",
+  "password": "1234",
+  "roles": ["ROLE_READ"]
+}
+
+### 회원가입 admin
+POST {{host}}/auth/signup
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "1234",
   "roles": ["ROLE_READ", "ROLE_WRITE"]
 }
 
@@ -13,6 +23,6 @@ POST {{host}}/auth/signin
 Content-Type: application/json
 
 {
-  "username": "eongiin",
-  "password": "iin1234"
+  "username": "user",
+  "password": "1234"
 }
