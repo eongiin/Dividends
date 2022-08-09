@@ -1,6 +1,7 @@
 ### 회사 정보 저장 (MMM,O,COKE,NKE,AAPL,QQQ,SPY,DIA)
 POST {{host}}/company
 Content-Type: application/json
+Authorization: Bearer {{auth_token}}
 
 {
   "ticker": "MMM"
@@ -12,8 +13,13 @@ GET {{host}}/company
 ### 회사 정보 조회 (페이지 사이즈 조절, 페이지 정보)
 GET {{host}}/company?size=5&page=1
 
-### 회사명으로 배당금 조회
-GET {{host}}/finance/dividend/3M Company
+### 회사 정보 조회 (+토큰)
+GET {{host}}/company
+Authorization: Bearer {{auth_token}}
 
 ### 자동완성 조회
 GET {{host}}/company/autocomplete?keyword=I
+
+### 회사 삭제
+DELETE {{host}}/company/MMM
+Authorization: Bearer {{auth_token}}

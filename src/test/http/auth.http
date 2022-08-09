@@ -1,0 +1,18 @@
+### 회원가입
+POST {{host}}/auth/signup
+Content-Type: application/json
+
+{
+  "username": "eongiin",
+  "password": "iin1234",
+  "roles": ["ROLE_READ", "ROLE_WRITE"]
+}
+
+### 로그인
+POST {{host}}/auth/signin
+Content-Type: application/json
+
+{
+  "username": "eongiin",
+  "password": "iin1234"
+}

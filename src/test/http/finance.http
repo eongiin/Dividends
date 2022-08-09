@@ -1,0 +1,3 @@
+### 회사명으로 배당금 조회(+토큰)
+GET {{host}}/finance/dividend/3M Company
+Authorization: Bearer {{auth_token}}
